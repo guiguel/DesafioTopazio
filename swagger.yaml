@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  title: DesafioTopázio
+  version: 1.0.0
+  description: Api do desafio topazio, para eliminar candidatos do processo de seleção para a vaga de dev fullstack
+
+paths:
+  /tasks:
+    post:
+      summary: Processar dados removendo campos vazios ou com #
+      description: Endpoint para processar dados enviados e remover campos indesejados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                rooms:
+                  type: array
+                  items:
+                    type: string
+                age:
+                  type: string
+                gender:
+                  type: string
+                companies:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    document:
+                      type: string
+              required:
+                - rooms
+                - gender
+                - companies
+      responses:
+        '200':
+          description: Dados processados com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: array
+                    items:
+                      type: string
+                  gender:
+                    type: string
+                  companies:
+                    type: object
+                    properties:
+                      document:
+                        type: string
+        '400':
+          description: Erro nos dados de entrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Dados de entrada inválidos
